@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const instance = axios.create({
+const apiClient = axios.create({
   baseURL: 'https://my-json-server.typicode.com/onildof/mock-json-server',
   withCredentials: false,
   headers: {
@@ -10,10 +10,10 @@ const instance = axios.create({
 })
 
 export default {
-  getEvents() {
-    return instance.get('/events')
+  getEvents(perPage, page) {
+    return apiClient.get(`/events?_limit=${perPage}&_page=${page}`)
   },
   getEvent(id) {
-    return instance.get(`/events/${id}`)
+    return apiClient.get(`/events/${id}`)
   },
 }
