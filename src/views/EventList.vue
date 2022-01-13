@@ -2,14 +2,20 @@
   <div class="home">
     <h1>Events for Good</h1>
     <EventCard v-for="event in events" :key="event.id" :event="event" />
-    <router-link
-      :to="{ name: 'EventList', query: { page: page - 1 } }"
-      v-if="page > 1"
-      >prev</router-link
-    >
-    <router-link :to="{ name: 'EventList', query: { page: page + 1 } }"
-      >next</router-link
-    >
+    <div class="pagination">
+      <router-link
+        id="page-prev"
+        :to="{ name: 'EventList', query: { page: page - 1 } }"
+        v-if="page > 1"
+        >&#60; Prev</router-link
+      >
+      <router-link
+        id="page-next"
+        :to="{ name: 'EventList', query: { page: page + 1 } }"
+        v-if="hasNextPage"
+        >Next &#62;</router-link
+      >
+    </div>
   </div>
 </template>
 
@@ -36,7 +42,13 @@ export default {
   data() {
     return {
       events: null,
+      eventsCount: 0,
     }
+  },
+  computed: {
+    hasNextPage() {
+      return this.eventsCount > this.page * this.perPage
+    },
   },
   created() {
     watchEffect(() => {
@@ -44,6 +56,7 @@ export default {
       EventService.getEvents(this.perPage, this.page)
         .then((response) => {
           this.events = response.data
+          this.eventsCount = response.headers['x-total-count']
         })
         .catch((error) => {
           console.log(error)
@@ -58,5 +71,24 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.pagination {
+  display: flex;
+  width: 290px;
+}
+
+.pagination a {
+  flex: 1;
+  text-decoration: none;
+  color: #2c3e50;
+}
+
+#page-prev {
+  text-align: left;
+}
+
+#page-next {
+  text-align: right;
 }
 </style>
