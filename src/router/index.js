@@ -16,8 +16,9 @@ const routes = [
     }),
   },
   {
-    path: '/about',
+    path: '/about-us',
     name: 'About',
+    alias: '/about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -25,7 +26,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: '/event/:id',
+    path: '/events/:id',
     name: 'EventLayout',
     props: true,
     component: EventLayout,
@@ -46,6 +47,32 @@ const routes = [
         component: EventEdit,
       },
     ],
+  },
+  /*  {
+    path: '/event/:id',
+    redirect: (route) => {
+      // não importa o nome que você dê ao argumento dessa função anônima, ele sempre será o objeto route
+      return {
+        name: 'EventLayout',
+        params: { id: route.params.id },
+      }
+    },
+    children: [
+      {
+        path: 'register',
+        redirect: { name: 'EventRegister' },
+      },
+      {
+        path: 'edit',
+        redirect: { name: 'EventEdit' },
+      },
+    ],
+  },*/
+  {
+    path: '/event/:afterEvent(.*)',
+    redirect: (route) => ({
+      path: `/events/${route.params.afterEvent}`,
+    }),
   },
 ]
 
