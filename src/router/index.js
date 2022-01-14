@@ -4,6 +4,8 @@ import EventDetails from '@/views/event/Details.vue'
 import EventRegister from '@/views/event/Register.vue'
 import EventEdit from '@/views/event/Edit.vue'
 import EventLayout from '@/views/event/Layout.vue'
+import NotFound from '@/views/NotFound.vue'
+import NetworkError from '@/views/NetworkError.vue'
 
 const routes = [
   {
@@ -48,7 +50,9 @@ const routes = [
       },
     ],
   },
-  /*  {
+  /*
+  // REDIRECT WITH CHILDREN  
+  {
     path: '/event/:id',
     redirect: (route) => {
       // não importa o nome que você dê ao argumento dessa função anônima, ele sempre será o objeto route
@@ -68,11 +72,27 @@ const routes = [
       },
     ],
   },*/
+  // REDIRECT WITH WILDCARD
   {
     path: '/event/:afterEvent(.*)',
     redirect: (route) => ({
       path: `/events/${route.params.afterEvent}`,
     }),
+  },
+  {
+    path: '/not-found/:resource',
+    name: 'ResourceNotFound',
+    component: NotFound,
+    props: true,
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: { name: 'ResourceNotFound', params: { resource: 'page' } },
+  },
+  {
+    path: '/network-error',
+    name: 'NetworkError',
+    component: NetworkError,
   },
 ]
 
