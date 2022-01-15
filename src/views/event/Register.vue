@@ -6,9 +6,18 @@
 <script>
 export default {
   props: ['event'],
+  inject: ['GStore'],
   methods: {
     register() {
       // If registration API call is successful,
+
+      //set message
+      this.GStore.flashMessage = `You are successfully registered to ${this.event.title}`
+      setTimeout(() => {
+        //erase it after 3s
+        this.GStore.flashMessage = ''
+      }, 3000)
+
       this.$router.replace({
         name: 'EventDetails',
         params: { id: this.event.id },
