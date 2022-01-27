@@ -22,7 +22,7 @@ export default {
           .catch((error) => {
             reject(error)
           })
-      }, 0) //modifique para simular um delay na resposta da API
+      }, 2000) //modifique para simular um delay na resposta da API
     })
   },
   getEvent(id) {
@@ -36,7 +36,7 @@ export default {
           .catch((error) => {
             reject(error)
           })
-      }, 0) //modifique para simular um delay na resposta da API
+      }, 2000) //modifique para simular um delay na resposta da API
     })
   },
 }

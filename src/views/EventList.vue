@@ -23,7 +23,6 @@
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/EventService.js'
-import NProgress from 'nprogress'
 
 export default {
   name: 'EventList',
@@ -50,30 +49,31 @@ export default {
       return this.eventsCount > this.page * this.perPage
     },
   },
-  beforeRouteEnter(routeTo, routeFrom, next) {
-    NProgress.start()
+  beforeRouteEnter(to, from, next) {
+    console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
     EventService.getEvents(
-      parseInt(routeTo.query.limit) || 2,
-      parseInt(routeTo.query.page) || 1
+      parseInt(to.query.limit) || 2,
+      parseInt(to.query.page) || 1
     )
       .then((response) => {
-        next((component) => {
-          component.events = response.data
-          component.eventsCount = response.headers['x-total-count']
+        next((vm) => {
+          console.log(
+            `${from.name} > ${to.name}\tin-component\tbeforeRouteEnter() CALLBACK do next executado.`
+          )
+          console.log(`\tvm.$options.name === '${vm.$options.name}'`)
+          vm.events = response.data
+          vm.eventsCount = response.headers['x-total-count']
         })
       })
       .catch(() => {
         next({ name: 'NetworkError' })
       })
-      .finally(() => {
-        NProgress.done()
-      })
   },
-  beforeRouteUpdate(routeTo, routeFrom, next) {
-    NProgress.start()
+  beforeRouteUpdate(to, from, next) {
+    console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteUpdate()`)
     EventService.getEvents(
-      parseInt(routeTo.query.limit) || 2,
-      parseInt(routeTo.query.page) || 1
+      parseInt(to.query.limit) || 2,
+      parseInt(to.query.page) || 1
     )
       .then((response) => {
         this.events = response.data
@@ -84,8 +84,45 @@ export default {
         next({ name: 'NetworkError' })
       })
       .finally(() => {
-        NProgress.done()
+        console.log(`in-component beforeRouteUpdate de EventList Chamada à API resolvida.
+\tthis.eventsCount === ${this.eventsCount}`)
       })
+  },
+  beforeRouteLeave(to, from) {
+    console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteLeave()`)
+  },
+  beforeCreate() {
+    console.log(`${this.$options.name} * beforeCreate()`)
+  },
+  created() {
+    console.log(`${this.$options.name} * created()`)
+  },
+  beforeMount() {
+    console.log(`${this.$options.name} * beforeMount()`)
+  },
+  mounted() {
+    console.log(`${this.$options.name} * mounted()`)
+  },
+  beforeUpdate() {
+    console.log(`${this.$options.name} * beforeUpdate()`)
+  },
+  updated() {
+    console.log(`${this.$options.name} * updated()`)
+  },
+  beforeUnmount() {
+    console.log(`${this.$options.name} * beforeUnmount()`)
+  },
+  unmounted() {
+    console.log(`${this.$options.name} * unmounted()`)
+  },
+  activated() {
+    console.log(`${this.$options.name} * activated()`)
+  },
+  deactivated() {
+    console.log(`${this.$options.name} * deactivated()`)
+  },
+  errorCaptured() {
+    console.log(`${this.$options.name} * errorCaptured()`)
   },
 }
 </script>
