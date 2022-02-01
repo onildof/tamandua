@@ -10,6 +10,11 @@ import NProgress from 'nprogress'
 import EventService from '@/services/EventService.js'
 import GStore from '@/store'
 
+const About = () => {
+  console.log("resolving async component 'About'")
+  return import(/* webpackChunkName: "about" */ '../views/About.vue')
+}
+
 const routes = [
   {
     path: '/',
@@ -30,10 +35,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => {
-      console.log("resolving async component 'About'")
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
-    },
+    component: About,
     beforeEnter: (to, from) => {
       console.log(`${from.name} > ${to.name}\tper-route\tbeforeEnter()`)
     },
@@ -86,6 +88,7 @@ const routes = [
         path: 'edit',
         name: 'EventEdit',
         component: EventEdit,
+        meta: { requireAuth: true },
       },
     ],
   },
@@ -138,11 +141,35 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
 })
 
 router.beforeEach((to, from) => {
   console.log(`${from.name} > ${to.name}\tglobal\t\tbeforeEach()`)
   NProgress.start()
+
+  const notAuthorized = true //na prática se usaria uma chamada à biblioteca de authorização
+
+  if (to.meta.requireAuth && notAuthorized) {
+    GStore.flashMessage = 'UNAUTHORIZED'
+    setTimeout(() => {
+      GStore.flashMessage = ''
+    }, 3000)
+
+    console.log(from)
+
+    if (from.href) {
+      return false
+    } else {
+      return { path: '/' }
+    }
+  }
 })
 
 router.beforeResolve((to, from) => {
