@@ -8,6 +8,7 @@ import EventList from '@/views/EventList.vue'
 import EventDetails from '@/views/event/Details.vue'
 import EventRegister from '@/views/event/Register.vue'
 import EventEdit from '@/views/event/Edit.vue'
+import EventCreate from '@/views/EventCreate.vue'
 import EventLayout from '@/views/event/Layout.vue'
 import NotFound from '@/views/NotFound.vue'
 import NetworkError from '@/views/NetworkError.vue'
@@ -28,9 +29,15 @@ const routes = [
     beforeEnter: (to, from) => {
       console.log(`${from.name} > ${to.name}\tper-route\tbeforeEnter()`)
     },
+    meta: {
+      //criei esses route meta fields para unificar em um só lugar os valores padrão de paginação e chamada à API, retirando os hardcoded do componente
+      perPageDefault: 2,
+      pageDefault: 1,
+    },
     props: (route) => ({
-      perPage: parseInt(route.query.limit) || 2,
-      page: parseInt(route.query.page) || 1,
+      //estes props estão sendo usados apenas para gerar a paginação. Não estão sendo usados na chamada à API
+      perPage: parseInt(route.query.limit || route.meta.perPageDefault),
+      page: parseInt(route.query.page || route.meta.pageDefault),
     }),
   },
   {
@@ -44,6 +51,11 @@ const routes = [
     beforeEnter: (to, from) => {
       console.log(`${from.name} > ${to.name}\tper-route\tbeforeEnter()`)
     },
+  },
+  {
+    path: '/create',
+    name: 'EventCreate',
+    component: EventCreate,
   },
   {
     path: '/events/:id',
@@ -148,6 +160,7 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
+      console.log(savedPosition) //PROBLEMA!!! se eu andar da 1a à 3a página e voltar no botão do browser, a savedPosition da 2a página vem zerada, mas a da 1a página vem recuperada ok.
       return savedPosition
     } else {
       return { top: 0 }
@@ -168,10 +181,12 @@ router.beforeEach((to, from) => {
     }, 3000)
 
     console.log(from)
-
+    //eu usaria from.name para identificar uma navegação direta para a URL, mas o curso usa from.href
     if (from.href) {
+      //esta navegação veio de uma outra página
       return false
     } else {
+      //esta navegação veio de uma URL direta
       return { path: '/' }
     }
   }

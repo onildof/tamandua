@@ -52,8 +52,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
     EventService.getEvents(
-      parseInt(to.query.limit) || 2,
-      parseInt(to.query.page) || 1
+      parseInt(to.query.limit) || to.meta.perPageDefault,
+      parseInt(to.query.page) || to.meta.pageDefault
     )
       .then((response) => {
         next((vm) => {
@@ -72,8 +72,8 @@ export default {
   beforeRouteUpdate(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteUpdate()`)
     EventService.getEvents(
-      parseInt(to.query.limit) || 2,
-      parseInt(to.query.page) || 1
+      parseInt(to.query.limit) || to.meta.perPageDefault, //Ao contrário do beforeRouteEnter, o componente (this) existe aqui. Daria pra usar os seus props perPage e page ao invés de propriedades da rota? Não. O this existe, mas os props da rota to ainda não foram passados a ele porque a navegação ainda não foi concluída.
+      parseInt(to.query.page) || to.meta.pageDefault
     )
       .then((response) => {
         this.events = response.data

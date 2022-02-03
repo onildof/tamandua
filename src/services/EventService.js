@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://my-json-server.typicode.com/onildof/mock-json-server',
+  baseURL: 'http://localhost:3000',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -38,5 +38,8 @@ export default {
           })
       }, 0) //modifique para simular um delay na resposta da API
     })
+  },
+  postEvent(event) {
+    return apiClient.post('/events', event)
   },
 }

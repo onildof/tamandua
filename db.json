@@ -1,0 +1,146 @@
+{
+  "events": [
+    {
+      "id": 5928101,
+      "category": "animal welfare",
+      "title": "Cat Adoption Day",
+      "description": "Find your new feline friend at this event.",
+      "location": "Meow Town",
+      "date": "January 28, 2022",
+      "time": "12:00",
+      "petsAllowed": true,
+      "organizer": "Kat Laydee"
+    },
+    {
+      "id": 4582797,
+      "category": "food",
+      "title": "Community Gardening",
+      "description": "Join us as we tend to the community edible plants.",
+      "location": "Flora City",
+      "date": "March 14, 2022",
+      "time": "10:00",
+      "petsAllowed": true,
+      "organizer": "Fern Pollin"
+    },
+    {
+      "id": 8419988,
+      "category": "sustainability",
+      "title": "Beach Cleanup",
+      "description": "Help pick up trash along the shore.",
+      "location": "Playa Del Carmen",
+      "date": "July 22, 2022",
+      "time": "11:00",
+      "petsAllowed": false,
+      "organizer": "Carey Wales"
+    },
+    {
+      "id": 7823101,
+      "category": "politics",
+      "title": "Congressman Mailing Day",
+      "description": "Send them messages.",
+      "location": "Meow Town",
+      "date": "January 28, 2022",
+      "time": "12:00",
+      "petsAllowed": true,
+      "organizer": "Kat Laydee"
+    },
+    {
+      "id": 5654497,
+      "category": "alcohol",
+      "title": "Drinking Spree",
+      "description": "Join us as we get wasted.",
+      "location": "Flora City",
+      "date": "March 14, 2022",
+      "time": "10:00",
+      "petsAllowed": true,
+      "organizer": "Fern Pollin"
+    },
+    {
+      "id": 426988,
+      "category": "religion",
+      "title": "Spaghetti Monster Mass",
+      "description": "Praise His Noddleness.",
+      "location": "Playa Del Carmen",
+      "date": "July 22, 2022",
+      "time": "11:00",
+      "petsAllowed": false,
+      "organizer": "Carey Wales"
+    },
+    {
+      "id": "aa7091eb-2939-44b0-8a5f-8bbc02309871",
+      "category": "animal welfare",
+      "title": "q",
+      "description": "q",
+      "location": "q",
+      "date": "q",
+      "time": "q",
+      "organizer": "Patatex"
+    },
+    {
+      "id": 59281012,
+      "category": "animal welfare",
+      "title": "Cat Adoption Day2",
+      "description": "Find your new feline friend at this event.",
+      "location": "Meow Town",
+      "date": "January 28, 2022",
+      "time": "12:00",
+      "petsAllowed": true,
+      "organizer": "Kat Laydee"
+    },
+    {
+      "id": 45827972,
+      "category": "food",
+      "title": "Community Gardening2",
+      "description": "Join us as we tend to the community edible plants.",
+      "location": "Flora City",
+      "date": "March 14, 2022",
+      "time": "10:00",
+      "petsAllowed": true,
+      "organizer": "Fern Pollin"
+    },
+    {
+      "id": 84199882,
+      "category": "sustainability",
+      "title": "Beach Cleanup2",
+      "description": "Help pick up trash along the shore.",
+      "location": "Playa Del Carmen",
+      "date": "July 22, 2022",
+      "time": "11:00",
+      "petsAllowed": false,
+      "organizer": "Carey Wales"
+    },
+    {
+      "id": 78231012,
+      "category": "politics",
+      "title": "Congressman Mailing Day2",
+      "description": "Send them messages.",
+      "location": "Meow Town",
+      "date": "January 28, 2022",
+      "time": "12:00",
+      "petsAllowed": true,
+      "organizer": "Kat Laydee"
+    },
+    {
+      "id": 56544972,
+      "category": "alcohol",
+      "title": "Drinking Spree2",
+      "description": "Join us as we get wasted.",
+      "location": "Flora City",
+      "date": "March 14, 2022",
+      "time": "10:00",
+      "petsAllowed": true,
+      "organizer": "Fern Pollin"
+    },
+    {
+      "id": 4269882,
+      "category": "religion",
+      "title": "Spaghetti Monster Mass2",
+      "description": "Praise His Noddleness.",
+      "location": "Playa Del Carmen",
+      "date": "July 22, 2022",
+      "time": "11:00",
+      "petsAllowed": false,
+      "organizer": "Carey Wales"
+    }
+  ]
+}
