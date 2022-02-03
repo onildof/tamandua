@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  isNavigationFailure,
+  NavigationFailureType,
+} from 'vue-router'
 import EventList from '@/views/EventList.vue'
 import EventDetails from '@/views/event/Details.vue'
 import EventRegister from '@/views/event/Register.vue'
@@ -176,8 +181,34 @@ router.beforeResolve((to, from) => {
   console.log(`${from.name} > ${to.name}\tglobal\t\tbeforeResolve()`)
 })
 
-router.afterEach((to, from) => {
+router.afterEach((to, from, failure) => {
   console.log(`${from.name} > ${to.name}\tglobal\t\tafterEach()`)
+
+  if (isNavigationFailure(failure)) {
+    console.log('the navigation failed')
+  }
+
+  if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
+    console.log(
+      'it was aborted (meaning a navigation guard returned false or called next(false)):',
+      failure
+    )
+  }
+
+  if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+    console.log(
+      'it was cancelled (meaning a new navigation took place before the current navigation could finish. e.g. router.push was called while waiting inside of a navigation guard.)',
+      failure
+    )
+  }
+
+  if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+    console.log(
+      'it was duplicated (meaning the navigation was prevented because we are already at the target location):',
+      failure
+    )
+  }
+
   NProgress.done()
 })
 
