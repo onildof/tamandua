@@ -13,8 +13,8 @@ import EventLayout from '@/views/event/Layout.vue'
 import NotFound from '@/views/NotFound.vue'
 import NetworkError from '@/views/NetworkError.vue'
 import NProgress from 'nprogress'
-import EventService from '@/services/EventService.js'
 import GStore from '@/store'
+import store2 from '@/store2'
 
 const About = () => {
   console.log("resolving async component 'About'")
@@ -65,11 +65,9 @@ const routes = [
       console.log(
         `${from.name} > ${to.name}\tper-route\tbeforeEnter() em EventLayout`
       )
-
-      return EventService.getEvent(to.params.id)
-        .then((response) => {
-          GStore.event = response.data
-        })
+      return store2
+        .dispatch('fetchEvent', to.params.id)
+        .then(() => {})
         .catch((error) => {
           if (error.request.status === 404) {
             return {
@@ -81,8 +79,10 @@ const routes = [
           }
         })
         .finally(() => {
-          console.log(`per-route beforeEnter de 'EventLayout' Chamada à API resolvida.
-\tGStore.event.title === ${GStore.event.title}`)
+          console.log(`per-route beforeEnter de 'EventLayout': despacho de ação do Vuex settled.
+\tstore2.state.event.title === ${
+            store2.state.event && store2.state.event.title
+          }`)
         })
     },
     children: [

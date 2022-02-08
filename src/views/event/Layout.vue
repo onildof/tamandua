@@ -1,33 +1,35 @@
 <template>
-  <div v-if="GStore.event">
-    <h1>{{ GStore.event.title }}</h1>
+  <div v-if="event">
+    <h1>{{ event.title }}</h1>
     <div class="nav">
-      <router-link
-        :to="{ name: 'EventDetails', params: { id: GStore.event.id } }"
+      <router-link :to="{ name: 'EventDetails', params: { id: event.id } }"
         >Details</router-link
       >
       |
-      <router-link
-        :to="{ name: 'EventRegister', params: { id: GStore.event.id } }"
+      <router-link :to="{ name: 'EventRegister', params: { id: event.id } }"
         >Register</router-link
       >
       |
-      <router-link :to="{ name: 'EventEdit', params: { id: GStore.event.id } }"
+      <router-link :to="{ name: 'EventEdit', params: { id: event.id } }"
         >Edit</router-link
       >
     </div>
-    <router-view :event="GStore.event" />
+    <router-view :event="event" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'EventLayout',
-  inject: ['GStore'],
   data() {
     return {
       callbackDeBeforeRouteEnterExecutado: false,
     }
+  },
+  computed: {
+    event() {
+      return this.$store.state.event
+    },
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
@@ -41,7 +43,7 @@ export default {
 \tvm.callbackDeBeforeRouteEnterExecutado === ${
           vm.callbackDeBeforeRouteEnterExecutado
         }
-\tvm.GStore.event.title === '${vm.GStore.event && vm.GStore.event.title}'`)
+\tvm.event.title === '${vm.event && vm.event.title}'`)
       }
     })
   },

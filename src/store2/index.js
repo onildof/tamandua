@@ -6,6 +6,7 @@ export default createStore({
     user: 'Patatex',
     events: [],
     eventsCount: 0,
+    event: null,
   },
   mutations: {
     ADD_EVENT(state, event) {
@@ -16,6 +17,9 @@ export default createStore({
     },
     SET_EVENTS_COUNT(state, eventsCount) {
       state.eventsCount = eventsCount
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     },
   },
   actions: {
@@ -34,6 +38,15 @@ export default createStore({
         .then((response) => {
           context.commit('SET_EVENTS', response.data)
           context.commit('SET_EVENTS_COUNT', response.headers['x-total-count'])
+        })
+        .catch((error) => {
+          throw error
+        })
+    },
+    fetchEvent(context, id) {
+      return EventService.getEvent(id)
+        .then((response) => {
+          context.commit('SET_EVENT', response.data)
         })
         .catch((error) => {
           throw error
