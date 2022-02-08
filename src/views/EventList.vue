@@ -40,13 +40,13 @@ export default {
   },
   computed: {
     hasNextPage() {
-      return store2.state.eventsCount > this.page * this.perPage
+      return this.$store.state.eventsCount > this.page * this.perPage
     },
     events() {
-      return store2.state.events
+      return this.$store.state.events
     },
     eventsCount() {
-      return store2.state.eventsCount
+      return this.$store.state.eventsCount
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -75,7 +75,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteUpdate()`)
-    store2
+    this.$store
       .dispatch('fetchEvents', {
         perPage: parseInt(to.query.limit || to.meta.perPageDefault),
         page: parseInt(to.query.page || to.meta.pageDefault),
