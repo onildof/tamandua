@@ -12,6 +12,7 @@ import EventCreate from '@/views/EventCreate.vue'
 import EventLayout from '@/views/event/Layout.vue'
 import NotFound from '@/views/NotFound.vue'
 import NetworkError from '@/views/NetworkError.vue'
+import ErrorDisplay from '@/views/ErrorDisplay.vue'
 import NProgress from 'nprogress'
 import GStore from '@/store'
 import store2 from '@/store2'
@@ -152,6 +153,12 @@ const routes = [
     path: '/network-error',
     name: 'NetworkError',
     component: NetworkError,
+  },
+  {
+    path: '/error/:error',
+    name: 'ErrorDisplay',
+    props: true,
+    component: ErrorDisplay,
   },
 ]
 

@@ -24,12 +24,12 @@ export default createStore({
   },
   actions: {
     createEvent(context, event) {
-      EventService.postEvent(event)
+      return EventService.postEvent(event)
         .then(() => {
           context.commit('ADD_EVENT', event)
         })
         .catch((error) => {
-          console.log(error)
+          throw error
         })
     },
     fetchEvents(context, payload) {
