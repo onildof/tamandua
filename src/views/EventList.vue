@@ -22,7 +22,7 @@
 <script>
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService.js'
+import store2 from '@/store2'
 
 export default {
   name: 'EventList',
@@ -38,54 +38,57 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      events: null,
-      eventsCount: 0,
-    }
-  },
   computed: {
     hasNextPage() {
-      return this.eventsCount > this.page * this.perPage
+      return store2.state.eventsCount > this.page * this.perPage
+    },
+    events() {
+      return store2.state.events
+    },
+    eventsCount() {
+      return store2.state.eventsCount
     },
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
-    EventService.getEvents(
-      parseInt(to.query.limit) || to.meta.perPageDefault,
-      parseInt(to.query.page) || to.meta.pageDefault
-    )
-      .then((response) => {
+    store2
+      .dispatch('fetchEvents', {
+        perPage: parseInt(to.query.limit || to.meta.perPageDefault),
+        page: parseInt(to.query.page || to.meta.pageDefault),
+      })
+      .then(() => {
         next((vm) => {
           console.log(
             `${from.name} > ${to.name}\tin-component\tbeforeRouteEnter() CALLBACK do next executado.`
           )
           console.log(`\tvm.$options.name === '${vm.$options.name}'`)
-          vm.events = response.data
-          vm.eventsCount = response.headers['x-total-count']
         })
       })
       .catch(() => {
         next({ name: 'NetworkError' })
       })
+      .finally(() => {
+        console.log(
+          'in-component beforeRouteEnter() de EventList: despacho de ação do Vuex settled'
+        )
+      })
   },
   beforeRouteUpdate(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteUpdate()`)
-    EventService.getEvents(
-      parseInt(to.query.limit) || to.meta.perPageDefault, //Ao contrário do beforeRouteEnter, o componente (this) existe aqui. Daria pra usar os seus props perPage e page ao invés de propriedades da rota? Não. O this existe, mas os props da rota to ainda não foram passados a ele porque a navegação ainda não foi concluída.
-      parseInt(to.query.page) || to.meta.pageDefault
-    )
-      .then((response) => {
-        this.events = response.data
-        this.eventsCount = response.headers['x-total-count']
+    store2
+      .dispatch('fetchEvents', {
+        perPage: parseInt(to.query.limit || to.meta.perPageDefault),
+        page: parseInt(to.query.page || to.meta.pageDefault),
+      })
+      .then(() => {
         next()
       })
       .catch(() => {
         next({ name: 'NetworkError' })
       })
       .finally(() => {
-        console.log(`in-component beforeRouteUpdate de EventList Chamada à API resolvida.
-\tthis.eventsCount === ${this.eventsCount}`)
+        console.log(`in-component beforeRouteUpdate() de EventList: despacho de ação do Vuex settled.
+    \tthis.eventsCount === ${this.eventsCount}`)
       })
   },
   beforeRouteLeave(to, from) {
