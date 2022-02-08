@@ -44,13 +44,20 @@ export default createStore({
         })
     },
     fetchEvent(context, id) {
-      return EventService.getEvent(id)
-        .then((response) => {
-          context.commit('SET_EVENT', response.data)
-        })
-        .catch((error) => {
-          throw error
-        })
+      const alreadyFetchedEvent = context.state.events.find(
+        (event) => event.id == id
+      )
+      if (alreadyFetchedEvent) {
+        context.commit('SET_EVENT', alreadyFetchedEvent)
+      } else {
+        return EventService.getEvent(id)
+          .then((response) => {
+            context.commit('SET_EVENT', response.data)
+          })
+          .catch((error) => {
+            throw error
+          })
+      }
     },
   },
 })
