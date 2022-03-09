@@ -1,7 +1,14 @@
 <template>
   <div class="home">
     <h1>Events for Good</h1>
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <router-link
+      class="event-link"
+      v-for="event in events"
+      :key="event.id"
+      :to="{ name: 'EventDetails', params: { id: event.id } }"
+    >
+      <EventCard :event="event" />
+    </router-link>
     <div class="pagination">
       <router-link
         id="page-prev"
