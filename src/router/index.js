@@ -16,6 +16,7 @@ import ErrorDisplay from '@/views/ErrorDisplay.vue'
 import NProgress from 'nprogress'
 import GStore from '@/store'
 import store2 from '@/store2'
+import RandomNumber from '@/components/RandomNumber.vue'
 
 const About = () => {
   console.log("resolving async component 'About'")
@@ -159,6 +160,11 @@ const routes = [
     name: 'ErrorDisplay',
     props: true,
     component: ErrorDisplay,
+  },
+  {
+    path: '/random-number',
+    name: 'RandomNumber',
+    component: RandomNumber,
   },
 ]
 
