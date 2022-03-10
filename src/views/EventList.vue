@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Events for Good</h1>
+    <h1 data-testid="event-list-title">Events for Good</h1>
     <router-link
       class="event-link"
       v-for="event in events"
@@ -47,6 +47,7 @@ export default {
   },
   computed: {
     hasNextPage() {
+      // único lugar onde os props page e perPage são usados
       return this.$store.state.eventsCount > this.page * this.perPage
     },
     events() {
