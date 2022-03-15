@@ -7,13 +7,20 @@ describe('LoginForm', () => {
     const wrapper = mount(LoginForm)
 
     // 1. Encontrar o text input
-    // 2. Escrever nele
-    // 3. Submeter o formulário
-    // 4. Assert the event has been emitted
-    // 5. Assert the payload is correct
     const input = wrapper.get('[data-testid="name-input"]')
+
+    // 2. Escrever nele
     await input.setValue('Ungoliant')
+
+    // 3. Submeter o formulário
     await wrapper.trigger('submit')
-    expect(wrapper.emitted())
+
+    // 4. Assert the event has been emitted
+    const formSubmittedEmissions = wrapper.emitted('formSubmitted')
+    expect(formSubmittedEmissions).toHaveLength(1)
+
+    // 5. Assert the payload is correct
+    const expectedPayload = { name: 'Ungoliant' }
+    expect(formSubmittedEmissions[0][0]).toEqual(expectedPayload) //usa-se o matcher toEqual() para objetos iguais com referências diferentes
   })
 })
