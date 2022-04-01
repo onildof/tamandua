@@ -1,4 +1,7 @@
 {
+  "message": {
+    "text": "Hello from the db!"
+  },
   "events": [
     {
       "id": 5928101,
