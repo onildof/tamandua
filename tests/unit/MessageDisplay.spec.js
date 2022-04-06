@@ -9,10 +9,37 @@ beforeEach(() => {
 })
 
 describe('MessageDisplay', () => {
-  it('makes successful call to getMessage() returns a message. Displays message', async () => {
+  // it('makes actual successful call to getMessage(). Displays returned message', async () => {
+  //   // API call bem-sucedida
+  //   const expectedMessage = 'Hello from the db YOHOHO!'
+
+  //   // jest.spyOn(object, methodName) cria uma função mock que repassa as chamadas à função verdadeira em object[methodName].
+  //   // É basicamente um ataque de homem-do-meio
+  //   // Devemos espiar a definição do componente, não a instância
+  //   const spy = jest.spyOn(MessageDisplay, 'created')
+
+  //   // componente é montado
+  //   const wrapper = mount(MessageDisplay)
+
+  //   // esse trecho de código é um macete para garantir que os ciclos de vida do componente montado se completem antes de nossa primeira asserção
+  //   await new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve()
+  //     }, 1000)
+  //   })
+
+  //   // checar que a chamada foi feita uma vez
+  //   expect(spy).toHaveBeenCalledTimes(1)
+
+  //   // checar que o componente exibe a mensagem
+  //   const message = wrapper.get('[data-testid="message"]').text()
+  //   expect(message).toEqual(expectedMessage)
+  // })
+
+  it('This mocks API method getMessage, then MessageDisplay makes successful call to getMessage(). Displays returned message', async () => {
     //mock da API call bem-sucedida
-    const mockMessage = 'Hello from the mocked db!'
-    getMessage.mockResolvedValueOnce({ text: mockMessage })
+    const expectedMessage = 'Hello from the db HA!'
+    getMessage.mockResolvedValueOnce({ text: expectedMessage })
 
     const wrapper = mount(MessageDisplay)
 
@@ -23,7 +50,7 @@ describe('MessageDisplay', () => {
 
     //checar que o componente exibe a mensagem
     const message = wrapper.get('[data-testid="message"').text()
-    expect(message).toEqual(mockMessage)
+    expect(message).toEqual(expectedMessage)
   })
 
   it('makes failed call to getMessage() returns an error. Displays error', async () => {
