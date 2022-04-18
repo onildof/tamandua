@@ -36,6 +36,9 @@ export default {
   components: {
     EventCard,
   },
+  // Os props são usados apenas para criar os RouterLinks de paginação
+  // então temos ROUTE (query params OU route meta fields) > COMPONENT SCRIPT (props) > COMPONENT TEMPLATE (pagination RouterLinks)
+  // RouterLinks só podem acessar props do componente
   props: {
     perPage: {
       type: Number,
@@ -47,7 +50,6 @@ export default {
   },
   computed: {
     hasNextPage() {
-      // único lugar onde os props page e perPage são usados
       return this.$store.state.eventsCount > this.page * this.perPage
     },
     events() {
@@ -59,6 +61,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
+    // O beforeRouteEnter não pode acessar os props do componente pois este nem existe ainda
+    // mas pode acessar os query parameters ou na ausência destes, os route meta fields
+    // para despachar uma action no Vuex store
     store2
       .dispatch('fetchEvents', {
         perPage: parseInt(to.query.limit || to.meta.perPageDefault),
@@ -83,6 +88,10 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteUpdate()`)
+    // Em suma: os queryParams (ou na ausência destes, os route meta fields) são alimentados tanto
+    // nos props do componente, quanto nos in-component route navigation guards
+    // Os props por sua vez alimentam a paginação do template, e os route navigation guards
+    // alimentam chamadas ao store Vuex, que retornarão os eventos.
     this.$store
       .dispatch('fetchEvents', {
         perPage: parseInt(to.query.limit || to.meta.perPageDefault),

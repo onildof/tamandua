@@ -32,12 +32,12 @@ const routes = [
       console.log(`${from.name} > ${to.name}\tper-route\tbeforeEnter()`)
     },
     meta: {
-      //criei esses route meta fields para unificar em um só lugar os valores padrão de paginação e chamada à API, retirando os hardcoded do componente
+      //criei esses route meta fields para unificar em um só lugar os valores padrão de paginação e chamada à API, retirando os hardcoded do componente EventList
       perPageDefault: 2,
       pageDefault: 1,
     },
     props: (route) => ({
-      //estes props estão sendo usados apenas para gerar a paginação. Não estão sendo usados na chamada à API
+      //query parameters (ou na ausência destes, route meta fields) viram props, os quais o componente usará para criar os links de paginação
       perPage: parseInt(route.query.limit || route.meta.perPageDefault),
       page: parseInt(route.query.page || route.meta.pageDefault),
     }),
