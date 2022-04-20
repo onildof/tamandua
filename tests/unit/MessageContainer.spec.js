@@ -2,7 +2,7 @@ import MessageContainer from '@/components/MessageContainer'
 import { mount } from '@vue/test-utils'
 
 describe('MessageContainer', () => {
-  it('wraps the MessageDisplay component WHICH CALLS THE API', async () => {
+  xit('wraps the MessageDisplay component WHICH CALLS THE API', async () => {
     const expectedMessage = 'Hello from the db HARR!'
     const wrapper = mount(MessageContainer)
 

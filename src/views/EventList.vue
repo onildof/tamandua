@@ -7,7 +7,7 @@
       :key="event.id"
       :to="{ name: 'EventDetails', params: { id: event.id } }"
     >
-      <EventCard :event="event" />
+      <EventCard data-testid="event" :event="event" />
     </router-link>
     <div class="pagination">
       <router-link
