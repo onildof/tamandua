@@ -1,7 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import EventList from '@/views/EventList.vue'
 import { createStore } from '@/store2'
 import router from '@/router'
+import { events as mockEvents } from '../../db.json'
 
 /*
   Vai receber um objeto assim:
@@ -35,11 +36,13 @@ function mountEventList(config = {}) {
   })
 }
 
-xdescribe('EventList', () => {
-  it('should render the events', () => {
-    const page = 1
-    const perPage = 1
-    const wrapper = mountEventList({
+const page = 1
+const perPage = 1
+let wrapper
+
+describe('EventList', () => {
+  beforeEach(async () => {
+    wrapper = mountEventList({
       mountOptions: {
         props: {
           perPage,
@@ -48,51 +51,63 @@ xdescribe('EventList', () => {
       },
     })
 
+    // Final do setup: esperar pelo DOM ser atualizado, o que significa que todos
+    // os lifecycle hooks do componente foram fulfilled
+    await flushPromises()
+  })
+
+  it('should render the events', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
-})
 
-xdescribe('page title', () => {
-  it('is rendered with the correct text', () => {
-    //Setup
-    const page = 1
-    const perPage = 1
-    const wrapper = mountEventList({
-      mountOptions: {
-        props: {
-          perPage,
-          page,
-        },
-      },
+  describe('page title', () => {
+    it('is rendered with the correct text', () => {
+      //Find
+      const title = wrapper.get('[data-testid="event-list-title"]')
+
+      //Make Assertions
+      expect(title.exists()).toBeTruthy()
+      expect(title.text()).toContain('Events for Good')
     })
-
-    //Find
-    const title = wrapper.get('[data-testid="event-list-title"]')
-
-    //Make Assertions
-    expect(title.exists()).toBeTruthy()
-    expect(title.text()).toContain('Events for Good')
   })
-})
 
-describe('events', () => {
-  it('are rendered in a list', () => {
-    //Setup
-    const mockEvents = [{ description: 'An event', title: 'A title', id: 0 }]
-    const wrapper = mountEventList({
-      plugins: {
-        store: {
-          state: () => ({
-            events: mockEvents,
-          }),
+  describe('events', () => {
+    it('are rendered in a list with necessary information', async () => {
+      //Setup
+      wrapper = mountEventList({
+        mountOptions: {
+          props: {
+            perPage,
+            page,
+          },
         },
-      },
+        plugins: {
+          store: {
+            state: () => ({
+              events: mockEvents,
+            }),
+          },
+        },
+      })
+
+      // Final do setup: esperar pelo DOM ser atualizado, o que significa que todos
+      // os lifecycle hooks do componente foram fulfilled
+      await flushPromises()
+
+      //Find
+      const events = wrapper.findAll('[data-testid="event"]')
+
+      //Make Assertions
+      expect(events).toHaveLength(mockEvents.length)
+
+      events.forEach((element, index) => {
+        const event = element
+        const eventText = event.text()
+
+        expect(eventText).toContain(mockEvents[index].time)
+        expect(eventText).toContain(mockEvents[index].date)
+        expect(eventText).toContain(mockEvents[index].title)
+      })
     })
-
-    //Find
-    const events = wrapper.findAll('[data-testid="event"]')
-
-    //Make Assertions
-    expect(events).toHaveLength(mockEvents.length)
   })
 })
