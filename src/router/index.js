@@ -17,6 +17,7 @@ import NProgress from 'nprogress'
 import GStore from '@/store'
 import store2 from '@/store2'
 import RandomNumber from '@/components/RandomNumber.vue'
+import SimpleForm from '@/views/SimpleForm.vue'
 
 const About = () => {
   console.log("resolving async component 'About'")
@@ -165,6 +166,11 @@ const routes = [
     path: '/random-number',
     name: 'RandomNumber',
     component: RandomNumber,
+  },
+  {
+    path: '/simple-form',
+    name: 'SimpleForm',
+    component: SimpleForm,
   },
 ]
 
