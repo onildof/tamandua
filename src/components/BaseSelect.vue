@@ -1,11 +1,19 @@
 <template>
   <label>{{ label }}</label>
-  <select>
+  <select
+    :value="modelValue"
+    v-bind="{
+      ...$attrs,
+      onChange: ($event) => {
+        $emit('update:modelValue', $event.target.value)
+      },
+    }"
+  >
     <option
-      v-for="option in categories"
+      v-for="option in options"
       :key="option"
       :value="option"
-      :selected="option === event.category"
+      :selected="option === modelValue"
     >
       {{ option }}
     </option>
@@ -22,6 +30,10 @@ export default {
     modelValue: {
       type: [String, Number],
       default: '',
+    },
+    options: {
+      type: Array,
+      required: true,
     },
   },
   emits: ['update:modelValue'],
