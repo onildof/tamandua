@@ -19,27 +19,23 @@
       <base-input v-model="event.location" label="Location" />
 
       <h3>Are pets allowed?</h3>
-      <base-input type="radio" v-model="event.pets" label="pets" />
-      <div>
-        <input type="radio" v-model="event.pets" :value="1" name="pets" />
-        <label>Yes</label>
-      </div>
 
       <div>
-        <input type="radio" v-model="event.pets" :value="0" name="pets" />
-        <label>No</label>
+        <base-radio-group
+          name="pets"
+          v-model="event.pets"
+          :options="petOptions"
+        ></base-radio-group>
       </div>
 
       <h3>Extras</h3>
 
       <div>
-        <input type="checkbox" v-model="event.extras.catering" class="field" />
-        <label>Catering</label>
+        <base-checkbox v-model="event.extras.catering" label="Catering" />
       </div>
 
       <div>
-        <input type="checkbox" v-model="event.extras.music" class="field" />
-        <label>Live music</label>
+        <base-checkbox v-model="event.extras.music" label="Live music" />
       </div>
 
       <button type="Submit">Submit</button>
@@ -50,8 +46,10 @@
 <script>
 import BaseSelect from '@/components/BaseSelect.vue'
 import BaseInput from '@/components/BaseInput.vue'
+import BaseCheckbox from '@/components/BaseCheckbox.vue'
+import BaseRadioGroup from '@/components/BaseRadioGroup.vue'
 export default {
-  components: { BaseInput, BaseSelect },
+  components: { BaseInput, BaseSelect, BaseCheckbox, BaseRadioGroup },
   data() {
     return {
       categories: [
@@ -74,6 +72,10 @@ export default {
           music: false,
         },
       },
+      petOptions: [
+        { value: 1, label: 'Yes' },
+        { value: 0, label: 'No' },
+      ],
     }
   },
 }

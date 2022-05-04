@@ -1,5 +1,5 @@
 <template>
-  <label>{{ label }}</label>
+  <label v-if="label">{{ label }}</label>
   <select
     :value="modelValue"
     v-bind="{
