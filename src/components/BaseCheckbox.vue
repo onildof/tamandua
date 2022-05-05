@@ -4,11 +4,13 @@
     :checked="modelValue"
     @change="$emit('update:modelValue', $event.target.checked)"
     class="field"
+    :id="uuid"
   />
-  <label v-if="label">{{ label }}</label>
+  <label :for="uuid" v-if="label">{{ label }}</label>
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
 export default {
   props: {
     label: {
@@ -21,6 +23,11 @@ export default {
     },
   },
   emits: ['update:modelValue'],
+  setup() {
+    return {
+      uuid: uuidv4(),
+    }
+  },
 }
 </script>
 

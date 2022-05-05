@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label">{{ label }}</label>
+  <label :for="uuid" v-if="label">{{ label }}</label>
   <select
     :value="modelValue"
     v-bind="{
@@ -8,6 +8,7 @@
         $emit('update:modelValue', $event.target.value)
       },
     }"
+    :id="uuid"
   >
     <option
       v-for="option in options"
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
 export default {
   props: {
     label: {
@@ -37,6 +39,11 @@ export default {
     },
   },
   emits: ['update:modelValue'],
+  setup() {
+    return {
+      uuid: uuidv4(),
+    }
+  },
 }
 </script>
 
