@@ -1,70 +1,55 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit="onSubmit">
     <base-input
       type="email"
       label="email"
-      v-model="email"
-      :error="emailError"
+      :modelValue="email"
+      @change="handleChange"
+      :error="errors.email"
     />
     <base-input
       type="password"
       label="password"
       v-model="password"
-      :error="passwordError"
+      :error="errors.password"
     />
     <button type="submit">Submit</button>
   </form>
 </template>
 
 <script>
-import { useField, useForm } from 'vee-validate'
 import BaseInput from '@/components/BaseInput.vue'
+import { useField, useForm } from 'vee-validate'
+import { object, string } from 'yup'
 export default {
   components: { BaseInput },
   setup() {
-    function onSubmit() {
-      alert('Submitted')
+    const validationSchema = object({
+      email: string().required().email(),
+      password: string().required(),
+    })
+
+    const { handleSubmit, errors, setFieldValue } = useForm({
+      validationSchema,
+    })
+
+    const handleChange = (event) => {
+      setFieldValue('email', event.target.value)
     }
 
-    const validations = {
-      email: (value) => {
-        if (!value) return 'This field is required'
+    const onSubmit = handleSubmit((values) => {
+      console.log(JSON.stringify(values, null, 2))
+    })
 
-        const regex =
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if (!regex.test(String(value).toLowerCase())) {
-          return 'Please enter a valid email address'
-        }
-
-        return true
-      },
-      password: (value) => {
-        const requiredMessage = 'This field is required'
-
-        if (value === undefined || value === null) {
-          return requiredMessage
-        }
-
-        if (!String(value).length) {
-          return requiredMessage
-        }
-
-        return true
-      },
-    }
-
-    useForm({ validationSchema: validations })
-
-    const { value: email, errorMessage: emailError } = useField('email')
-    const { value: password, errorMessage: passwordError } =
-      useField('password')
+    const { value: email } = useField('email')
+    const { value: password } = useField('password')
 
     return {
       onSubmit,
+      handleChange,
       email,
-      emailError,
       password,
-      passwordError,
+      errors,
     }
   },
 }
