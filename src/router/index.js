@@ -18,6 +18,8 @@ import GStore from '@/store'
 import store2 from '@/store2'
 import RandomNumber from '@/components/RandomNumber.vue'
 import SimpleForm from '@/views/SimpleForm.vue'
+import LoginForm from '@/views/LoginForm.vue'
+import ComponentsForm from '@/views/ComponentsForm.vue'
 
 const About = () => {
   console.log("resolving async component 'About'")
@@ -171,6 +173,16 @@ const routes = [
     path: '/simple-form',
     name: 'SimpleForm',
     component: SimpleForm,
+  },
+  {
+    path: '/login-form',
+    name: 'LoginForm',
+    component: LoginForm,
+  },
+  {
+    path: '/components-form',
+    name: 'ComponentsForm',
+    component: ComponentsForm,
   },
 ]
 

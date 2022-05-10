@@ -21,6 +21,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    error: {
+      type: String,
+      default: '',
+    },
   },
   emits: ['update:modelValue'],
   setup() {

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import LoginForm from '@/components/LoginForm.vue'
+import LoginForm from '@/views/LoginForm.vue'
 
 describe('LoginForm', () => {
   it('should emit an event with a payload', async () => {

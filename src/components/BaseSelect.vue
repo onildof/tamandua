@@ -9,6 +9,8 @@
       },
     }"
     :id="uuid"
+    :aria-describedby="error ? `${uuid}-error` : null"
+    :aria-invalid="error ? true : null"
   >
     <option
       v-for="option in options"
@@ -19,6 +21,14 @@
       {{ option }}
     </option>
   </select>
+  <p
+    v-if="error"
+    class="errorMessage"
+    :id="`${uuid}-error`"
+    aria-live="assertive"
+  >
+    {{ error }}
+  </p>
 </template>
 
 <script>
@@ -36,6 +46,10 @@ export default {
     options: {
       type: Array,
       required: true,
+    },
+    error: {
+      type: String,
+      default: '',
     },
   },
   emits: ['update:modelValue'],

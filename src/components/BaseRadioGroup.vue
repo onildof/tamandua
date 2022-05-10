@@ -38,6 +38,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    error: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>
