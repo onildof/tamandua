@@ -2,7 +2,7 @@
   <div class="home">
     <h1 data-testid="event-list-title">Events for Good</h1>
     <h2>
-      <div>doneTodosCountQI80: {{ doneTodos }}</div>
+      <div>doneTodosCountQI80: {{ doneTodosCount }}</div>
     </h2>
     <router-link
       class="event-link"
@@ -54,15 +54,9 @@ export default {
   },
   computed: {
     hasNextPage() {
-      return this.$store.state.eventsCount > this.page * this.perPage
+      return this.eventsCount > this.page * this.perPage
     },
-    events() {
-      return this.$store.state.events
-    },
-    eventsCount() {
-      return this.$store.state.eventsCount
-    },
-    ...mapGetters(['doneTodosCount']),
+    ...mapGetters(['doneTodosCount', 'events', 'eventsCount']),
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
