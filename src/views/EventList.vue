@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <h1 data-testid="event-list-title">Events for Good</h1>
+    <h2>
+      <div>doneTodosCountQI80: {{ doneTodos }}</div>
+    </h2>
     <router-link
       class="event-link"
       v-for="event in events"
@@ -30,6 +33,7 @@
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
 import store2 from '@/store2'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'EventList',
@@ -58,6 +62,7 @@ export default {
     eventsCount() {
       return this.$store.state.eventsCount
     },
+    ...mapGetters(['doneTodosCount']),
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)

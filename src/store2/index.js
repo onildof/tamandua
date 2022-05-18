@@ -7,6 +7,12 @@ const storeConfiguration = {
     events: [],
     eventsCount: 0,
     event: null,
+    todos: [
+      { chore: 'Trim bushes', done: false },
+      { chore: 'Do dishes', done: false },
+      { chore: 'Clean pool', done: true },
+      { chore: 'Walk dog', done: true },
+    ],
   },
   mutations: {
     ADD_EVENT(state, event) {
@@ -58,6 +64,14 @@ const storeConfiguration = {
             throw error
           })
       }
+    },
+  },
+  getters: {
+    doneTodos(state) {
+      return state.todos.filter((todo) => todo.done)
+    },
+    doneTodosCount(state, getters) {
+      return getters.doneTodos.length
     },
   },
 }
