@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1 data-testid="event-list-title">Events for Good</h1>
+    <h1 data-testid="event-list-title">Events for {{ user }}</h1>
     <h2>
       <div>doneTodosCountQI80: {{ doneTodosCount }}</div>
     </h2>
@@ -33,7 +33,7 @@
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
 import store2 from '@/store2'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'EventList',
@@ -56,7 +56,8 @@ export default {
     hasNextPage() {
       return this.eventsCount > this.page * this.perPage
     },
-    ...mapGetters(['doneTodosCount', 'events', 'eventsCount']),
+    ...mapGetters(['doneTodosCount']),
+    ...mapState(['events', 'eventsCount', 'user']),
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)

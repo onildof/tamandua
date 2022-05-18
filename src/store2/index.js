@@ -73,12 +73,6 @@ const storeConfiguration = {
     doneTodosCount(state, getters) {
       return getters.doneTodos.length
     },
-    events(state) {
-      return state.events
-    },
-    eventsCount(state, getters) {
-      return getters.events.length
-    },
   },
 }
 

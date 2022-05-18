@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'EventLayout',
   data() {
@@ -27,9 +29,7 @@ export default {
     }
   },
   computed: {
-    event() {
-      return this.$store.state.event
-    },
+    ...mapState(['event']),
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
