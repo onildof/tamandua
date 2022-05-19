@@ -1,20 +1,23 @@
 <template>
-  <div v-if="event">
-    <h1>{{ event.title }}</h1>
+  <div v-if="event.currentEvent">
+    <h1>{{ event.currentEvent.title }}</h1>
     <div class="nav">
-      <router-link :to="{ name: 'EventDetails', params: { id: event.id } }"
+      <router-link
+        :to="{ name: 'EventDetails', params: { id: event.currentEvent.id } }"
         >Details</router-link
       >
       |
-      <router-link :to="{ name: 'EventRegister', params: { id: event.id } }"
+      <router-link
+        :to="{ name: 'EventRegister', params: { id: event.currentEvent.id } }"
         >Register</router-link
       >
       |
-      <router-link :to="{ name: 'EventEdit', params: { id: event.id } }"
+      <router-link
+        :to="{ name: 'EventEdit', params: { id: event.currentEvent.id } }"
         >Edit</router-link
       >
     </div>
-    <router-view :event="event" />
+    <router-view :event="event.currentEvent" />
   </div>
 </template>
 
@@ -43,7 +46,9 @@ export default {
 \tvm.callbackDeBeforeRouteEnterExecutado === ${
           vm.callbackDeBeforeRouteEnterExecutado
         }
-\tvm.event.title === '${vm.event && vm.event.title}'`)
+\tvm.event.currentEvent.title === '${
+          vm.event.currentEvent && vm.event.currentEvent.title
+        }'`)
       }
     })
   },

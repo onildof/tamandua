@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-    <h1 data-testid="event-list-title">Events for {{ user }}</h1>
+    <h1 data-testid="event-list-title">Events for {{ user.userInfo.name }}</h1>
     <h2>
       <div>doneTodosCountQI80: {{ doneTodosCount }}</div>
     </h2>
     <router-link
       class="event-link"
-      v-for="event in events"
+      v-for="event in event.events"
       :key="event.id"
       :to="{ name: 'EventDetails', params: { id: event.id } }"
     >
@@ -54,10 +54,10 @@ export default {
   },
   computed: {
     hasNextPage() {
-      return this.eventsCount > this.page * this.perPage
+      return this.event.eventsCount > this.page * this.perPage
     },
     ...mapGetters(['doneTodosCount']),
-    ...mapState(['events', 'eventsCount', 'user']),
+    ...mapState(['event', 'user']),
   },
   beforeRouteEnter(to, from, next) {
     console.log(`${from.name} > ${to.name}\tin-component\tbeforeRouteEnter()`)
@@ -105,7 +105,7 @@ export default {
       })
       .finally(() => {
         console.log(`in-component beforeRouteUpdate() de EventList: despacho de ação do Vuex settled.
-    \tthis.eventsCount === ${this.eventsCount}`)
+    \tthis.event.eventsCount === ${this.event.eventsCount}`)
       })
   },
   beforeRouteLeave(to, from) {

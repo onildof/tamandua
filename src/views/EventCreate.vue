@@ -76,7 +76,7 @@ export default {
     onSubmit() {
       const event = {
         ...this.event,
-        organizer: this.user,
+        organizer: this.user.userInfo.name,
         id: uuidv4(),
       }
       this.createEvent(event)
