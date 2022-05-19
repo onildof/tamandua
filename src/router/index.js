@@ -71,7 +71,7 @@ const routes = [
         `${from.name} > ${to.name}\tper-route\tbeforeEnter() em EventLayout`
       )
       return store2
-        .dispatch('fetchEvent', to.params.id)
+        .dispatch('event/fetchEvent', to.params.id)
         .then(() => {})
         .catch((error) => {
           if (error.request.status === 404) {

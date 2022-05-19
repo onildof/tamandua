@@ -65,7 +65,7 @@ export default {
     // mas pode acessar os query parameters ou na ausência destes, os route meta fields
     // para despachar uma action no Vuex store
     store2
-      .dispatch('fetchEvents', {
+      .dispatch('event/fetchEvents', {
         perPage: parseInt(to.query.limit || to.meta.perPageDefault),
         page: parseInt(to.query.page || to.meta.pageDefault),
       })
@@ -93,7 +93,7 @@ export default {
     // Os props por sua vez alimentam a paginação do template, e os route navigation guards
     // alimentam chamadas ao store Vuex, que retornarão os eventos.
     this.$store
-      .dispatch('fetchEvents', {
+      .dispatch('event/fetchEvents', {
         perPage: parseInt(to.query.limit || to.meta.perPageDefault),
         page: parseInt(to.query.page || to.meta.pageDefault),
       })

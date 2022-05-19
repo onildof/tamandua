@@ -72,7 +72,7 @@ export default {
     ...mapState(['user']),
   },
   methods: {
-    ...mapActions(['createEvent']),
+    ...mapActions('event', ['createEvent']),
     onSubmit() {
       const event = {
         ...this.event,
